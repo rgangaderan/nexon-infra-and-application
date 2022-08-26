@@ -1,6 +1,8 @@
 ---
 on:
-  pull_request:
+  push:
+    branches:
+      - dev
 jobs: 
   setup-SSH: 
     defaults: 
