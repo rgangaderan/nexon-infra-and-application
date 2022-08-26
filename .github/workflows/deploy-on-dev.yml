@@ -6,7 +6,7 @@ jobs:
     defaults: 
       run: 
         shell: bash
-    name: SetUp-SSH
+    name: SetUp-SSH&Terragrunt
     runs-on: self-hosted
     steps: 
       - 
@@ -24,19 +24,21 @@ jobs:
         with: 
           host: github.com
           private-key: "${{ secrets.PRIVATE_KEY }}"
+
   setup-terragrunt: 
     defaults: 
       run: 
         shell: bash
-    name: Install-Terragrunt
+    name: Deploy-DEV-VPC
     runs-on: self-hosted
     steps: 
       - 
         name: Checkout
         uses: actions/checkout@v2
       - 
-        name: "Setup Terragrunt v0.38.4"
-        run: |
-            sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
-            sudo chmod +x /bin/terragrunt
-            terragrunt -v
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt apply -auto-approve --terragrunt-working-dir ./development/network
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [setup-SSH]
