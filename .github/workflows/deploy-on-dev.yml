@@ -1,11 +1,11 @@
-name: 'Development Deployment'
+name: 'VPC Deployment'
 on:
   push:
     branches:
       - dev
 jobs:
   Setup-Terragrunt & SSH:
-    name: 'Development Deployment'
+    name: 'VPC Deployment'
     runs-on: self-hosted
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
