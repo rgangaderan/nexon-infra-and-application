@@ -5,6 +5,7 @@ on:
       - dev
 jobs:
   Setup-Terragrunt-SSH:
+
     name: 'VPC Deployment'
     runs-on: self-hosted
 
@@ -29,6 +30,7 @@ jobs:
       with:
           host: github.com
           private-key: ${{ secrets.PRIVATE_KEY }}
+
 
   Terraform-Apply-VPC:
     name: 'Development Deployment'
