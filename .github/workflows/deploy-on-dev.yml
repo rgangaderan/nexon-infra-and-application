@@ -34,7 +34,7 @@ jobs:
           private-key: ${{ secrets.PRIVATE_KEY }}
 
 
-  Terraform-Apply-VPC:
+  Terraform:
     name: 'Development Deployment'
     runs-on: self-hosted
 
