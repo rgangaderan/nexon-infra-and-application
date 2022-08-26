@@ -35,7 +35,7 @@ jobs:
 
 
   terraform:
-    name: Development Deployment
+    name: Development-Deployment
     runs-on: self-hosted
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
