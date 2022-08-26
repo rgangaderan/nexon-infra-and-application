@@ -6,7 +6,7 @@
 on:
   pull_request:
 jobs:
-  setup-terragrunt-SSH:
+  setup-SSH:
     name: SetUp-SSH
     runs-on: self-hosted
 
@@ -32,7 +32,7 @@ jobs:
           host: github.com
           private-key: ${{ secrets.PRIVATE_KEY }}
 
-  setup-terragrunt-SSH:
+  setup-terragrunt:
     name: Install-Terragrunt
     runs-on: self-hosted
 
