@@ -3,7 +3,6 @@
   # push:
   #   branches:
   #     - dev
-name: Terragrunt Plan All
 on:
   pull_request:
 jobs:
