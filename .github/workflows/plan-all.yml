@@ -1,8 +1,3 @@
-#### GitHub Action Workflow ####
-# This workflow will Run on Self Hosed EC2 instance in AWS, 
-# we have already configured the runner and configured terraform token and ssh key in Github secret.
-# Once you have done with Planning, please make sure to change the Terraform Cloud # Workspace as Execution Mode Local
-
 name: 'Terragrunt Plan All'
 on:
   pull_request:
