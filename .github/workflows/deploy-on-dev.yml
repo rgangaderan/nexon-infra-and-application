@@ -27,7 +27,7 @@ jobs:
           host: github.com
           private-key: "${{ secrets.PRIVATE_KEY }}"
 
-  setup-terragrunt: 
+  deploy-terragrunt-vpc: 
     defaults: 
       run: 
         shell: bash
@@ -44,3 +44,21 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
+
+  setup-terragrunt: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-WebApp
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt apply -auto-approve --terragrunt-working-dir ./development/network
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-terragrunt-vpc]
