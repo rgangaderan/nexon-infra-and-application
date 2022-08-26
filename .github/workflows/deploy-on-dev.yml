@@ -38,7 +38,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       - 
-        name: Terragrunt Apply WebApp
+        name: Terragrunt Apply Network
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
         run: terragrunt apply -auto-approve --terragrunt-working-dir ./development/network
         env:
