@@ -1,0 +1,40 @@
+name: 'Terragrunt Plan All'
+on:
+  pull_request:
+jobs:
+  Terragrunt-Plan:
+    name: 'Terragrunt Plan All'
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terragrunt v0.38.4
+      run: |
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v
+    - name: Setup SSH
+      uses: MrSquaare/ssh-setup-action@v1
+      with:
+          host: github.com
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+    # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terragrunt Init
+      run: cd ./development/network && terragrunt init --terragrunt-non-interactive
+      env:
+        TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+
+    # Generates an execution plan for Terragrunt
+    - name: Terragrunt Plan
+      run: terragrunt run-all plan --terragrunt-non-interactive
+      env:
+        TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
