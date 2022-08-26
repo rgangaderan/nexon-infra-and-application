@@ -1,0 +1,47 @@
+name: 'Development Deployment'
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  Setup-Terragrunt & SSH:
+    name: 'Development Deployment'
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terragrunt v0.38.4
+      run: |
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v
+    # configure SSH authentication for clone repository
+    - name: Setup SSH
+      uses: MrSquaare/ssh-setup-action@v1
+      with:
+          host: github.com
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+  Terraform Apply VPC:
+    name: 'Development Deployment'
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+      # On push to dev, build or change infrastructure according to Terragrunt configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terragrunt Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: Terragrunt Apply Network
+      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+      run: terragrunt apply -auto-approve --terragrunt-working-dir ./development/network
+      env:
+        TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
