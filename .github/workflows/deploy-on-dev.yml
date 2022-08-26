@@ -1,4 +1,6 @@
---- 
+---
+on:
+  pull_request:
 jobs: 
   setup-SSH: 
     defaults: 
