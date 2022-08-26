@@ -3,7 +3,7 @@ include "root" {
 }
 
 locals {
-    read_environment  = read_terragrunt_config(find_in_parent_folders("environment.hcl"))
+    read_environment  = read_terragrunt_config(find_in_parent_folders("environment.hcl")) # Deployment environment and region defined in environment.hcl
     environment       = local.read_environment.locals.env
     region            = local.read_environment.locals.region
     aws_prfile        = "nexon-dev"
