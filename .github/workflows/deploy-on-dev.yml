@@ -7,7 +7,7 @@ on:
   pull_request:
 jobs:
   setup-terragrunt-SSH:
-    name: VPC-Deployment
+    name: SetUp-SSH
     runs-on: self-hosted
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -31,3 +31,23 @@ jobs:
       with:
           host: github.com
           private-key: ${{ secrets.PRIVATE_KEY }}
+
+  setup-terragrunt-SSH:
+    name: Install-Terragrunt
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terragrunt v0.38.4
+      run: |
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v
