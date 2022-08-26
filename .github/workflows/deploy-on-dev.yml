@@ -1,11 +1,13 @@
 name: 'VPC Deployment'
 on:
-  push:
-    branches:
-      - dev
+  # push:
+  #   branches:
+  #     - dev
+name: 'Terragrunt Plan All'
+on:
+  pull_request:
 jobs:
   Setup-Terragrunt-SSH:
-
     name: 'VPC Deployment'
     runs-on: self-hosted
 
