@@ -1,9 +1,9 @@
-name: 'Terragrunt Plan All'
+name: 'Terragrunt Init'
 on:
   pull_request:
 jobs:
   Terragrunt-Plan:
-    name: 'Terragrunt Plan All'
+    name: 'Terragrunt Init'
     runs-on: self-hosted
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
@@ -30,11 +30,5 @@ jobs:
     # Initialize a new or existing Terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terragrunt Init
       run: cd ./development/network && terragrunt init --terragrunt-non-interactive
-      env:
-        TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-
-    # Generates an execution plan for Terragrunt
-    - name: Terragrunt Plan
-      run: terragrunt run-all plan --terragrunt-non-interactive
       env:
         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}

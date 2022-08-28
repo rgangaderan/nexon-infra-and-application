@@ -1,63 +1,20 @@
-name: 'Production Deployment'
+name: 'Terragrunt Destroy All'
 on: 
   workflow_dispatch:
  
 jobs: 
-  setup-SSH: 
+  destroy-env: 
     defaults: 
       run: 
         shell: bash
-    name: SetUp-SSH&Terragrunt
+    name: Destroy-Env
     runs-on: self-hosted
     steps: 
       - 
         name: Checkout
         uses: actions/checkout@v2
       - 
-        name: "Setup Terragrunt v0.38.4"
-        run: |
-            sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
-            sudo chmod +x /bin/terragrunt
-            terragrunt -v
-      - 
-        name: "Setup SSH"
-        uses: MrSquaare/ssh-setup-action@v1
-        with: 
-          host: github.com
-          private-key: "${{ secrets.PRIVATE_KEY }}"
-
-  deploy-vpc: 
-    defaults: 
-      run: 
-        shell: bash
-    name: Deploy-PROD-VPC
-    runs-on: self-hosted
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Terragrunt Apply Network
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terragrunt apply -auto-approve --terragrunt-working-dir ./production/network
+        name: Terragrunt Destroy All
+        run: terragrunt destroy-all --terragrunt-non-interactive
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [setup-SSH]
-
-  deploy-webapp: 
-    defaults: 
-      run: 
-        shell: bash
-    name: Deploy-PROD-WebApp
-    runs-on: self-hosted
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Terragrunt Apply WebApp
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
-        env:
-          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [deploy-vpc]
