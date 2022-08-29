@@ -55,6 +55,7 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
+
         run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
