@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply Network
-        run: terragrunt apply -auto-approve --terragrunt-working-dir ./production/network
+        run: terragrunt init --terragrunt-working-dir ./production/network && terragrunt apply -auto-approve --terragrunt-working-dir ./production/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
@@ -55,7 +55,8 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
-        run: terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
+
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [deploy-vpc]
