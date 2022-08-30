@@ -42,7 +42,6 @@ inputs = {
 
   vpc_zone_identifier = dependency.network.outputs.private_subnet_ids
 
-
   instance_type = {
     development = "t2.micro"
     staging     = "t2.micro"
