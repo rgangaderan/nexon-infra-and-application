@@ -31,6 +31,8 @@ jobs:
       run: 
         shell: bash
     name: Deploy-PROD-VPC
+    environment:
+      name: Prod
     runs-on: self-hosted
     steps: 
       - 
@@ -48,6 +50,8 @@ jobs:
       run: 
         shell: bash
     name: Deploy-PROD-WebApp
+    environment:
+      name: Prod
     runs-on: self-hosted
     steps: 
       - 
@@ -65,7 +69,8 @@ jobs:
       run: 
         shell: bash
     name: Deploy-PROD-WebApp-ALB
-
+    environment:
+      name: Prod
     runs-on: self-hosted
     steps: 
       - 
