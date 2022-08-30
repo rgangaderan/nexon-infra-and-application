@@ -6,7 +6,7 @@ locals {
     read_environment  = read_terragrunt_config(find_in_parent_folders("environment.hcl"))
     environment       = local.read_environment.locals.env
     region            = local.read_environment.locals.region
-    aws_profile        = "nexon-dev"
+    aws_profile       = "nexon-dev"
     environment_owner = "rgangaderan@gmail.com"
     common_tags       =  {
       Stage           = "${local.environment}",
@@ -21,7 +21,7 @@ dependency "network" {
 }
 
 terraform {
-  source = "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v3.0.1"
+  source =  "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v3.0.2"
 }
 
 inputs = {
@@ -34,15 +34,10 @@ inputs = {
   vpc_id         = dependency.network.outputs.vpc_id
   profile        = local.aws_profile
   cidr           = dependency.network.outputs.vpc_cidr_block
-  subnet_id      = dependency.network.outputs.private_subnet_ids[0]
   vpc_cidr_block = [dependency.network.outputs.vpc_cidr_block]
+  subnet_id      = dependency.network.outputs.private_subnet_ids[0]
   key_name       = "mypuc"
-  volume_size    = 20
-  volume_type    = "gp2"
-  instance_coun  = 1
-  max_size       = 5
-  min_size       = 2
-  subnets        = dependency.network.outputs.public_subnet_ids
+  instance_count = 2
   tag_info       = local.common_tags
 
   vpc_zone_identifier = dependency.network.outputs.private_subnet_ids
