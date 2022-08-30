@@ -64,14 +64,16 @@ jobs:
     defaults: 
       run: 
         shell: bash
-    name: Deploy-PROD-WebApp
+    name: Deploy-PROD-WebApp-ALB
+
     runs-on: self-hosted
     steps: 
       - 
         name: Checkout
         uses: actions/checkout@v2
       - 
-        name: Terragrunt Apply WebApp
+        name: Terragrunt Apply WebApp-alb
+
         run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
