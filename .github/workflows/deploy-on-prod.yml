@@ -55,8 +55,24 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
-
         run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
+
+  deploy-webapp-alb: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-PROD-WebApp
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [deploy-vpc]
