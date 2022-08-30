@@ -21,7 +21,7 @@ dependency "network" {
 }
 
 terraform {
-  source =  "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v3.0.3"
+  source =  "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v3.0.1"
 }
 
 inputs = {
@@ -38,6 +38,13 @@ inputs = {
   subnet_id      = dependency.network.outputs.private_subnet_ids[0]
   key_name       = "mypuc"
   instance_count = 2
+  tag_info       = local.common_tags
+  volume_size    = 20
+  volume_type    = "gp2"
+  instance_coun  = 1
+  max_size       = 5
+  min_size       = 2
+  subnets        = dependency.network.outputs.public_subnet_ids
   tag_info       = local.common_tags
 
   vpc_zone_identifier = dependency.network.outputs.private_subnet_ids
