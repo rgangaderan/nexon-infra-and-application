@@ -52,4 +52,8 @@ inputs = {
     staging     = "t2.micro"
     production  = "t2.micro"
   }
+  dockerhub_repo   = "raj5444/webapp"
+  docker_version   = "v1.4"
+  docker_user_name = "/docker/docker_user_name"
+  docker_password  = "/docker/docker_password"
 }
