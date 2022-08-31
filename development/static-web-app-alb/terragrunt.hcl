@@ -15,13 +15,12 @@ locals {
   }
 }
 
-
 dependency "network" {
   config_path = "${path_relative_from_include()}/development/network"
 }
 
 terraform {
-  source =  "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v3.0.1"
+  source = "git@github.com:rgangaderan/nexon-terraform-business-module.git//static-web-app-alb?ref=v4.0.1"
 }
 
 inputs = {
@@ -41,8 +40,7 @@ inputs = {
   tag_info       = local.common_tags
   volume_size    = 20
   volume_type    = "gp2"
-  instance_coun  = 1
-  max_size       = 5
+  max_size       = 2
   min_size       = 2
   subnets        = dependency.network.outputs.public_subnet_ids
   tag_info       = local.common_tags
@@ -54,4 +52,8 @@ inputs = {
     staging     = "t2.micro"
     production  = "t2.micro"
   }
+  dockerhub_repo   = "raj5444/webapp"
+  docker_version   = "v1.4"
+  docker_user_name = "/docker/docker_user_name"
+  docker_password  = "/docker/docker_password"
 }
