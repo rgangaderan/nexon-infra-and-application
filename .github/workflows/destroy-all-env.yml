@@ -1,20 +1,20 @@
-name: 'Terragrunt Destroy All'
-on: 
-  workflow_dispatch:
+# name: 'Terragrunt Destroy All'
+# on: 
+#   workflow_dispatch:
  
-jobs: 
-  destroy-env: 
-    defaults: 
-      run: 
-        shell: bash
-    name: Destroy-Env
-    runs-on: self-hosted
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Terragrunt Destroy All
-        run: terragrunt destroy-all --terragrunt-non-interactive
-        env:
-          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+# jobs: 
+#   destroy-env: 
+#     defaults: 
+#       run: 
+#         shell: bash
+#     name: Destroy-Env
+#     runs-on: self-hosted
+#     steps: 
+#       - 
+#         name: Checkout
+#         uses: actions/checkout@v2
+#       - 
+#         name: Terragrunt Destroy All
+#         run: terragrunt destroy-all --terragrunt-non-interactive
+#         env:
+#           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
