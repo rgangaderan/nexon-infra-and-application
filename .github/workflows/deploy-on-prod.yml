@@ -1,3 +1,4 @@
+#### Deploying All Networks and Application will be execute through this workflow file on Prod Environment ####
 name: 'Production Deployment'
 on: 
   workflow_dispatch:
@@ -45,24 +46,24 @@ jobs:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
 
-  # deploy-webapp: 
-  #   defaults: 
-  #     run: 
-  #       shell: bash
-  #   name: Deploy-PROD-WebApp
-  #   environment:
-  #     name: Prod
-  #   runs-on: self-hosted
-  #   steps: 
-  #     - 
-  #       name: Checkout
-  #       uses: actions/checkout@v2
-  #     - 
-  #       name: Terragrunt Apply WebApp
-  #       run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
-  #       env:
-  #         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-  #   needs: [deploy-vpc]
+  deploy-webapp: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-PROD-WebApp
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
 
   deploy-webapp-alb: 
     defaults: 
