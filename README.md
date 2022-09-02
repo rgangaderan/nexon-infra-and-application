@@ -40,3 +40,4 @@ path name = "development/network/" and replace "/" with "-" then join with "nexo
 so, the workspace name could looks like "nexon-development-network". this same approach will use for all the backend.
 
 more details you can find in Terragrun Docs.
+https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-multiple-modules-at-once/
