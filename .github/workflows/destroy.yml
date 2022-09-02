@@ -45,7 +45,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-Prod]
+    needs: [Destroy-webapp-alb-Prod]
 
   Destroy-webapp-Prod: 
     defaults: 
