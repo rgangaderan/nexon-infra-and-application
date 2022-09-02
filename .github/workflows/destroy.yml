@@ -28,7 +28,7 @@ jobs:
           host: github.com
           private-key: "${{ secrets.PRIVATE_KEY }}"
 
-  Destroy-VPC-Prod: 
+  Destroy-vpc-Prod: 
     defaults: 
       run: 
         shell: bash
@@ -45,9 +45,9 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp]
+    needs: [Destroy-webapp-Prod]
 
-  Destroy-webapp: 
+  Destroy-webapp-Prod: 
     defaults: 
       run: 
         shell: bash
@@ -66,7 +66,7 @@ jobs:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
 
-  Destroy-webapp-alb: 
+  Destroy-webapp-alb-Prod: 
     defaults: 
       run: 
         shell: bash
@@ -84,10 +84,10 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp]
+    needs: [Destroy-webapp-Prod]
 
 #### Dev env Destoy ####
-  Destroy-VPC-Dev: 
+  Destroy-vpc-Dev: 
     defaults: 
       run: 
         shell: bash
@@ -105,9 +105,9 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [destroy-webapp]
+    needs: [Destroy-webapp-Dev]
 
-  Destroy-webapp: 
+  Destroy-webapp-Dev: 
     defaults: 
       run: 
         shell: bash
@@ -125,9 +125,9 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [destroy-webapp-alb]
+    needs: [Destroy-webapp-alb-Dev]
 
-  Destroy-webapp-alb: 
+  Destroy-webapp-alb-Dev: 
     defaults: 
       run: 
         shell: bash
