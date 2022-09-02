@@ -8,6 +8,7 @@ https://github.com/rgangaderan/nexon-terraform-business-module
 Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
 Using the Terragrunt structure we can simply configure our backend using one root module instead hardcoded values and backend configuration for all our resources.
 
+```
 locals {
     env             = path_relative_to_include()
     terraform_token = get_env("TERRAFORM_TOKEN") # Terraform cloud token placed in GitHub Secret, 
@@ -30,6 +31,7 @@ terraform {
 }
 EOF
 }
+```
 
 In the below example you can see workspaces name in line number 27 has name attribute will calling as which is defined in line number 11 local.env, so when ever you run Terragrunt in specific directory
 like development/network/ terragrun.hcl it will take the 
