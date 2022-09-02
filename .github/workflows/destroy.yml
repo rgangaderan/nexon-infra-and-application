@@ -1,0 +1,153 @@
+#### Destroying All Networks and Application will be execute through this workflow file on all the Environment ####
+
+name: 'Dev-Prod-Destroy'
+on: 
+  workflow_dispatch:
+ 
+jobs: 
+  setup-SSH: 
+    defaults: 
+      run: 
+        shell: bash
+    name: SetUp-SSH&Terragrunt
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: "Setup Terragrunt v0.38.4"
+        run: |
+            sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+            sudo chmod +x /bin/terragrunt
+            terragrunt -v
+      - 
+        name: "Setup SSH"
+        uses: MrSquaare/ssh-setup-action@v1
+        with: 
+          host: github.com
+          private-key: "${{ secrets.PRIVATE_KEY }}"
+
+  Destroy-vpc: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-PROD-VPC
+    environment:
+      name: Prod
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Destroy Network
+        run: terragrunt init --terragrunt-working-dir ./production/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/network
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [Destroy-webapp]
+
+  Destroy-webapp: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-PROD-WebApp
+    environment:
+      name: Prod
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Destroy WebApp
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/static-web-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [setup-SSH]
+
+  Destroy-webapp-alb: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-PROD-WebApp-ALB
+    environment:
+      name: Prod
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Destroy WebApp-alb
+
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [Destroy-webapp]
+
+#### Dev env Destoy ####
+  destroy-vpc: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-VPC
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply Network
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/network
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [destroy-webapp]
+  destroy-webapp: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-DEV-WebApp
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [destroy-webapp-alb]
+
+  destroy-webapp-alb: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-DEV-WebApp-ALB
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [setup-SSH]
