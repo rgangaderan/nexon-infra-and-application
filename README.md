@@ -61,10 +61,10 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.ht
 1. We have GitHub Workflow files located in “.github/workflow” directory
 2. Create a feature branch and commit your changes and it will 1st run Terrafrom Validation, once merge with Dev it will automatically trigger the pipeline and deploy the dev environment.
 3. Once dev branch merged with main branch you can manually trigger the production pipeline deployment will need a review and approve from your reviewer which already added in GHA Environment.
-1. <img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068810-d7bf4b5e-2d5e-40ed-8f5b-ba5145b007d2.png">
+<img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068810-d7bf4b5e-2d5e-40ed-8f5b-ba5145b007d2.png">
 
-2. <img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068843-26346343-d60a-4bcf-b92c-54ef7b67b3fd.png">
+<img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068843-26346343-d60a-4bcf-b92c-54ef7b67b3fd.png">
 
-3. <img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068881-3fe2f6df-b229-4805-a388-88c26070b265.png">
+<img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068881-3fe2f6df-b229-4805-a388-88c26070b265.png">
 
 
