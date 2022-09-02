@@ -41,3 +41,19 @@ so, the workspace name could looks like "nexon-development-network". this same a
 
 more details you can find in Terragrun Docs.
 https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-multiple-modules-at-once/
+
+Pre-Request to Deployment
+
+•	Create an EC2 Instance on your AWS Account and configure GitHub Access Self Hosted Runner
+ 
+
+•	IAM Role for Instance Profile with switch account access
+Create role with enough permission to deploy your services
+https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-iam-instance-profile.html
+•	Install AWS CLI on EC2 and configure profile to deploy on multi account
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html
+
+Deployment Process
+•	We have GitHub Workflow files located in “.github/workflow” directory
+•	Create a feature branch and commit your changes and it will 1st run Terrafrom Validation, once merge with Dev it will automatically trigger the pipeline and deploy the dev environment.
+•	Once dev branch merged with main branch you can manually trigger the production pipeline deployment will need a review and approve from your reviewer which already added in GHA Environment.
