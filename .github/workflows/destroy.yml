@@ -87,7 +87,7 @@ jobs:
     needs: [Destroy-webapp]
 
 #### Dev env Destoy ####
-  destroy-vpc: 
+  Destroy-vpc: 
     defaults: 
       run: 
         shell: bash
@@ -106,7 +106,8 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [destroy-webapp]
-  destroy-webapp: 
+    
+  Destroy-webapp: 
     defaults: 
       run: 
         shell: bash
@@ -126,7 +127,7 @@ jobs:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [destroy-webapp-alb]
 
-  destroy-webapp-alb: 
+  Destroy-webapp-alb: 
     defaults: 
       run: 
         shell: bash
