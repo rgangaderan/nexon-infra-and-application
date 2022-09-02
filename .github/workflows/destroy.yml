@@ -35,8 +35,6 @@ jobs:
     name: Destroy-PROD-VPC
     environment:
       name: Prod
-    environment:
-      name: Prod
     runs-on: self-hosted
     steps: 
       - 
@@ -56,8 +54,6 @@ jobs:
     name: Destroy-PROD-WebApp
     environment:
       name: Prod
-    environment:
-      name: Prod
     runs-on: self-hosted
     steps: 
       - 
@@ -75,8 +71,6 @@ jobs:
       run: 
         shell: bash
     name: Destroy-PROD-WebApp-ALB
-    environment:
-      name: Prod
     environment:
       name: Prod
     runs-on: self-hosted
