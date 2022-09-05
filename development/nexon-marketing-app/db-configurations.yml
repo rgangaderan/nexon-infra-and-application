@@ -1,0 +1,11 @@
+storage: "10"
+engine: "mysql"
+engine_version: "5.7"
+instance_class: "db.t3.micro"
+database_name: "nexon"
+database_username_key: "/production/database/username/master"
+database_password_key: "/production/database/password/master"
+parameter_group_name: "default.mysql5.7"
+skip_snapshot: true
+deletion_protection: false
+db_port: 3306
