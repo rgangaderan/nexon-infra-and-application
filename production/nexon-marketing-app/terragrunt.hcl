@@ -6,7 +6,7 @@ locals {
     read_environment  = read_terragrunt_config(find_in_parent_folders("environment.hcl")) # Deployment environment and region defined in environment.hcl
     environment       = local.read_environment.locals.env
     region            = local.read_environment.locals.region
-    aws_profile        = "nexon-dev"
+    aws_profile        = "nexon-prod"
     environment_owner = "rgangaderan@gmail.com"
     common_tags       =  {
       "Stage"           = "${local.environment}",
