@@ -104,7 +104,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-Prod]
+    needs: [Destroy-webapp-alb-Prod]
 
 #### Dev env Destoy ####
   Destroy-vpc-Dev: 
@@ -181,4 +181,4 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [setup-SSH]
+    needs: [Destroy-webapp-alb-Dev]
