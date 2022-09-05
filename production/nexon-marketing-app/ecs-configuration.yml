@@ -1,0 +1,16 @@
+general_configuration:
+  cpu: 1024
+  memory: 2048
+  image: "126609036647.dkr.ecr.us-east-1.amazonaws.com/nexon-development:1.0"
+  desired_count: 2
+  launch_type: "FARGATE"
+
+ports:
+  container_port: 80
+  host_port: 80
+
+name: foo
+value: bar
+
+name: secret
+valueFrom: "arn:aws:ssm:us-east-1:126609036647:parameter/docker/docker_user_name"

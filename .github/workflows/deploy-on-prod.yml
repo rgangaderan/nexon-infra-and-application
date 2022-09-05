@@ -84,3 +84,23 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [deploy-vpc]
+
+  deploy-nexon-marketing: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-PROD-Nexon-Marketing
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp-alb
+
+        run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]

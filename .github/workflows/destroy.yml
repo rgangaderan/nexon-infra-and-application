@@ -86,6 +86,26 @@ jobs:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [Destroy-webapp-Prod]
 
+  Destroy-nexon-marketing-Prod: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-PROD-Nexon-Marketing
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Destroy WebApp-alb
+
+        run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [Destroy-webapp-alb-Prod]
+
 #### Dev env Destoy ####
   Destroy-vpc-Dev: 
     defaults: 
@@ -120,7 +140,7 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
-        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app
+        run: terragrunt init --terragrunt-working-dir ./development/static-web-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [Destroy-webapp-alb-Dev]
@@ -139,7 +159,26 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
-        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+        run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
+
+  Destroy-nexon-marketing-Dev: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Destroy-DEV-Nexon-Marketing
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [Destroy-webapp-alb-Dev]
