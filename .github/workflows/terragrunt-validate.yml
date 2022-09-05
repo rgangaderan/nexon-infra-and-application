@@ -1,0 +1,35 @@
+name: 'Terragrunt validate'
+on:
+  pull_request:
+jobs:
+  Terragrunt-Validate:
+    name: 'Terragrunt validate'
+    runs-on: self-hosted
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is self hosted ubuntu
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terragrunt v0.38.4
+      run: |
+        sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+        sudo chmod +x /bin/terragrunt
+        terragrunt -v
+
+    - name: Setup SSH
+      uses: MrSquaare/ssh-setup-action@v1
+      with:
+          host: github.com
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
+    # validateialize a new or existing Terragrunt working directory by creating validateial files, loading any remote state, downloading modules, etc.
+    - name: Terragrunt validate
+      run: terragrunt validate-all --terragrunt-non-interactive
+      env:
+        TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
