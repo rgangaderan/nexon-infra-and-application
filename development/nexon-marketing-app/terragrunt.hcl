@@ -20,7 +20,7 @@ dependency "network" {
 }
 
 terraform {
-  source = "git@github.com:rgangaderan/nexon-terraform-business-module.git//nexon-marketing?ref=v4.1.1"
+  source = "git@github.com:rgangaderan/nexon-terraform-business-module.git//nexon-marketing?ref=v4.1.2"
 }
 
 inputs = {
