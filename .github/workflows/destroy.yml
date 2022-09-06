@@ -113,7 +113,7 @@ jobs:
         shell: bash
     name: Deploy-DEV-VPC
     environment:
-      name: Prod
+      name: Dev
     runs-on: self-hosted
     steps: 
       - 
@@ -132,7 +132,7 @@ jobs:
         shell: bash
     name: Destroy-DEV-WebApp
     environment:
-      name: Prod
+      name: Dev
     runs-on: self-hosted
     steps: 
       - 
@@ -151,7 +151,7 @@ jobs:
         shell: bash
     name: Destroy-DEV-WebApp-ALB
     environment:
-      name: Prod
+      name: Dev
     runs-on: self-hosted
     steps: 
       - 
@@ -170,7 +170,7 @@ jobs:
         shell: bash
     name: Destroy-DEV-Nexon-Marketing
     environment:
-      name: Prod
+      name: Dev
     runs-on: self-hosted
     steps: 
       - 
