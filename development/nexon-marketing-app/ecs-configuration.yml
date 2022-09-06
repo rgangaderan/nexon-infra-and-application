@@ -1,7 +1,7 @@
 general_configuration:
   cpu: 1024
   memory: 2048
-  image: "126609036647.dkr.ecr.us-east-1.amazonaws.com/nexon-development:1.0"
+  image: "126609036647.dkr.ecr.us-east-1.amazonaws.com/nexon-development-sbpza:latest"
   desired_count: 2
   launch_type: "FARGATE"
 
