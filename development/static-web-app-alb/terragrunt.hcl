@@ -36,7 +36,6 @@ inputs = {
   vpc_cidr_block = [dependency.network.outputs.vpc_cidr_block]
   subnet_id      = dependency.network.outputs.private_subnet_ids[0]
   key_name       = "mypuc"
-  instance_count = 2
   tag_info       = local.common_tags
   volume_size    = 20
   volume_type    = "gp2"
