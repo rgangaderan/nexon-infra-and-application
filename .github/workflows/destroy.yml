@@ -178,7 +178,7 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Terragrunt Apply WebApp
-        run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+        run: terragrunt init --terragrunt-working-dir ./development/nexon-marketing-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/nexon-marketing-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
