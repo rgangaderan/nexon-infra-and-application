@@ -45,7 +45,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-alb-Prod]
+    needs: [Destroy-webapp-alb-Prod, Destroy-webapp-Prod, Destroy-nexon-marketing-Prod]
 
   Destroy-webapp-Prod: 
     defaults: 
@@ -84,7 +84,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-Prod]
+    needs: [setup-SSH]
 
   Destroy-nexon-marketing-Prod: 
     defaults: 
@@ -104,7 +104,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-alb-Prod]
+    needs: [setup-SSH]
 
 #### Dev env Destoy ####
   Destroy-vpc-Dev: 
@@ -124,7 +124,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/network
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-Dev]
+    needs: [Destroy-webapp-Dev, Destroy-webapp-alb-Dev, Destroy-nexon-marketing-Dev]
 
   Destroy-webapp-Dev: 
     defaults: 
@@ -143,7 +143,7 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/static-web-app && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-alb-Dev]
+    needs: [setup-SSH]
 
   Destroy-webapp-alb-Dev: 
     defaults: 
@@ -181,4 +181,4 @@ jobs:
         run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt destroy -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [Destroy-webapp-alb-Dev]
+    needs: [setup-SSH]
