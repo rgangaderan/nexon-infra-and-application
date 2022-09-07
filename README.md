@@ -6,7 +6,7 @@ https://github.com/rgangaderan/nexon-terraform-tech-module
 https://github.com/rgangaderan/nexon-terraform-business-module
 
 Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
-Using the Terragrunt structure we can simply configure our backend using one root module instead hardcoded values and backend configuration for all our resources.
+Using the Terragrunt directory structure we can simply configure our backend using one root module instead hardcoded values and backend configuration for all our resources.
 
 ```
 locals {
@@ -33,13 +33,13 @@ EOF
 }
 ```
 
-In the below example you can see workspaces name in line number 27 has name attribute will calling as which is defined in line number 11 local.env, so when ever you run Terragrunt in specific directory
-like development/network/ terragrun.hcl it will take the 
-path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-")
+In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
 
-so, the workspace name could looks like "nexon-development-network". this same approach will use for all the backend.
+such as development/network/ terragrun.hcl it will take the path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-").
 
-more details you can find in Terragrun Docs.
+So, the workspace name could looks like "nexon-development-network". this same approach will use for all the backend.
+
+For more details you can find in Terragrun Docs.
 https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-multiple-modules-at-once/
 
 # Pre-Request to Deployment
@@ -59,7 +59,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.ht
 
 # Deployment Process
 1. We have GitHub Workflow files located in “.github/workflow” directory
-2. Create a feature branch and commit your changes and it will 1st run Terrafrom Validation, once merge with Dev it will automatically trigger the pipeline and deploy the dev environment.
+2. Create a feature branch and commit your changes, once merge with Dev it will automatically trigger the pipeline and deploy the dev environment.
 3. Once dev branch merged with main branch you can manually trigger the production pipeline deployment will need a review and approve from your reviewer which already added in GHA Environment.
 <img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068810-d7bf4b5e-2d5e-40ed-8f5b-ba5145b007d2.png">
 
