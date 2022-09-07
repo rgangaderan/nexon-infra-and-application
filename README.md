@@ -1,7 +1,7 @@
 # nexon-infra-and-application
 nexon-infra-and-application
 
-Since we use terragrunt as our main deployment tool we are not passing any values in business layer and the tech layer.
+Since we use terragrunt as our main deployment tool we are only passing needed (which will not change!!!!) values in business layer and no default variables for tech layer.
 https://github.com/rgangaderan/nexon-terraform-tech-module
 https://github.com/rgangaderan/nexon-terraform-business-module
 
