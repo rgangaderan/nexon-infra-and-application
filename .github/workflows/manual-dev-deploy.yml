@@ -1,0 +1,120 @@
+
+#### Deploying All Networks and Application will be execute through this workflow file on Dev Environment by manually triggering the pipeline in GHA ####
+name: 'Development Manual Deployment'
+on: 
+  workflow_dispatch:
+      
+jobs: 
+#### SSH Private key is already saved as a GHA secret in Github repository, in order to pull private repository we use ssh method for cloning remote repos
+#### Initially we have created ssh key pare and public-key has stored in GitHub Public SSH, the private key will use in self hosted runner to clone the repos
+  setup-SSH: 
+    defaults: 
+      run: 
+        shell: bash
+    name: SetUp-SSH&Terragrunt
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+#### Using bash as script we install Terragrunt in the self hosted runner
+      - 
+        name: "Setup Terragrunt v0.38.4"
+        run: |
+            sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+            sudo chmod +x /bin/terragrunt
+            terragrunt -v
+      - 
+        name: "Setup SSH"
+        uses: MrSquaare/ssh-setup-action@v1
+        with: 
+          host: github.com
+          private-key: "${{ secrets.PRIVATE_KEY }}"
+
+#######################################################
+#Deploy Dev VPC with Subnet, RouteTable, IGW nad Nat
+#######################################################
+
+  deploy-vpc: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-VPC
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+#### We also have terraform cloud token to configure Backend for state in Terraform Cloud ####
+#### The environment variable has already stored as secret in GitHub Repository 
+      - 
+        name: Terragrunt Apply Network
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/network && terragrunt apply -auto-approve --terragrunt-working-dir ./development/network
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [setup-SSH]
+
+#######################################################
+#Deploy Static-WebApp with Clasic LB
+#######################################################
+
+  deploy-webapp: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-WebApp
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/static-web-app && terragrunt apply -auto-approve --terragrunt-working-dir ./development/static-web-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
+
+############################################################################
+#Deploy Static-WebApp with Application Load Balancer and Autoscalling groups
+############################################################################
+  deploy-webapp-alb: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-WebApp-ALB
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
+
+#######################################################################
+#Deploy Static-WebApp with , ECS Fargate with Application Load Balancer
+#######################################################################
+  deploy-nexon-marketing: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-DEV-Nexon-Marketing
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp
+        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+        run: terragrunt init --terragrunt-working-dir ./development/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./development/nexon-marketing-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
