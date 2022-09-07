@@ -81,41 +81,41 @@ jobs:
 ############################################################################
 #Deploy Static-WebApp with Application Load Balancer and Autoscalling groups
 ############################################################################
-  deploy-webapp-alb: 
-    defaults: 
-      run: 
-        shell: bash
-    name: Deploy-DEV-WebApp-ALB
-    runs-on: self-hosted
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Terragrunt Apply WebApp
-        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-        run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
-        env:
-          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [deploy-vpc]
+  # deploy-webapp-alb: 
+  #   defaults: 
+  #     run: 
+  #       shell: bash
+  #   name: Deploy-DEV-WebApp-ALB
+  #   runs-on: self-hosted
+  #   steps: 
+  #     - 
+  #       name: Checkout
+  #       uses: actions/checkout@v2
+  #     - 
+  #       name: Terragrunt Apply WebApp
+  #       if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+  #       run: terragrunt init --terragrunt-working-dir ./development/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./development/static-web-app-alb
+  #       env:
+  #         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+  #   needs: [deploy-vpc]
 
 #######################################################################
 #Deploy Static-WebApp with , ECS Fargate with Application Load Balancer
 #######################################################################
-  deploy-nexon-marketing: 
-    defaults: 
-      run: 
-        shell: bash
-    name: Deploy-DEV-Nexon-Marketing
-    runs-on: self-hosted
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Terragrunt Apply WebApp
-        if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-        run: terragrunt init --terragrunt-working-dir ./development/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./development/nexon-marketing-app
-        env:
-          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-    needs: [deploy-vpc]
+  # deploy-nexon-marketing: 
+  #   defaults: 
+  #     run: 
+  #       shell: bash
+  #   name: Deploy-DEV-Nexon-Marketing
+  #   runs-on: self-hosted
+  #   steps: 
+  #     - 
+  #       name: Checkout
+  #       uses: actions/checkout@v2
+  #     - 
+  #       name: Terragrunt Apply WebApp
+  #       if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+  #       run: terragrunt init --terragrunt-working-dir ./development/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./development/nexon-marketing-app
+  #       env:
+  #         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+  #   needs: [deploy-vpc]
