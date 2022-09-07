@@ -1,4 +1,4 @@
-#### Destroying All Networks and Application will be execute through this workflow file on all the Environment ####
+#### Destroying All Networks and Application will be execute through this workflow file on all the Environment Need review and approvals before destroy ####
 
 name: 'Dev-Prod-Destroy'
 on: 
