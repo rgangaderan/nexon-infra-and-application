@@ -27,6 +27,10 @@ jobs:
           host: github.com
           private-key: "${{ secrets.PRIVATE_KEY }}"
 
+#######################################################
+#Deploy Dev VPC with Subnet, RouteTable, IGW nad Nat
+#######################################################
+
   deploy-vpc: 
     defaults: 
       run: 
@@ -45,6 +49,10 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [setup-SSH]
+
+#######################################################
+#Deploy Static-WebApp with Clasic LB
+#######################################################
 
   deploy-webapp: 
     defaults: 
@@ -65,6 +73,10 @@ jobs:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [deploy-vpc]
 
+############################################################################
+#Deploy Static-WebApp with Application Load Balancer and Autoscalling groups
+############################################################################
+
   deploy-webapp-alb: 
     defaults: 
       run: 
@@ -84,6 +96,10 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
     needs: [deploy-vpc]
+
+#######################################################################
+#Deploy Static-WebApp with , ECS Fargate with Application Load Balancer
+#######################################################################
 
   deploy-nexon-marketing: 
     defaults: 
