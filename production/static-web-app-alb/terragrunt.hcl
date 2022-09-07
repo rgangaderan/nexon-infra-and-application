@@ -44,6 +44,7 @@ inputs = {
   min_size       = 2
   subnets        = dependency.network.outputs.public_subnet_ids
   tag_info       = local.common_tags
+  type           = "instance"
 
   vpc_zone_identifier = dependency.network.outputs.private_subnet_ids
 
