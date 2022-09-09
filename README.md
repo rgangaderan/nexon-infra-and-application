@@ -7,7 +7,7 @@ https://github.com/rgangaderan/nexon-terraform-tech-module
 https://github.com/rgangaderan/nexon-terraform-business-module
 ```
 
--Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
+- Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
 Using the Terragrunt directory structure we can simply configure our backend using one root module instead hardcoded values and backend configuration for all our resources.
 
 ```
@@ -35,7 +35,7 @@ EOF
 }
 ```
 
--In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
+- In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
 
 such as development/network/ terragrun.hcl it will take the path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-").
 
