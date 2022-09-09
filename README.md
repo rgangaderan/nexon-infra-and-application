@@ -1,11 +1,13 @@
-# nexon-infra-and-application
-nexon-infra-and-application
+# Infra-and-Application
 
 Since we use terragrunt as our main deployment tool we are only passing needed (which will not change!!!!) values in business layer and no default variables for tech layer.
+
+```
 https://github.com/rgangaderan/nexon-terraform-tech-module
 https://github.com/rgangaderan/nexon-terraform-business-module
+```
 
-Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
+-- Terragrunt will help to keep our Terraform code dry, and it helps to keep different environment such as Development, Production or QA
 Using the Terragrunt directory structure we can simply configure our backend using one root module instead hardcoded values and backend configuration for all our resources.
 
 ```
@@ -33,7 +35,7 @@ EOF
 }
 ```
 
-In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
+-- In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
 
 such as development/network/ terragrun.hcl it will take the path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-").
 
@@ -42,17 +44,21 @@ So, the workspace name could looks like "nexon-development-network". this same a
 For more details you can find in Terragrun Docs.
 https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-multiple-modules-at-once/
 
-# Pre-Request to Deployment
+## Prerequisites / Setup Required
 
 1. Create an EC2 Instance on your AWS Account and configure GitHub Access Self Hosted Runner
+
  <img width="291" alt="image" src="https://user-images.githubusercontent.com/36160986/188068773-62e7145d-22b3-480f-9558-9d5cf295b897.png">
 
 
 2. IAM Role for Instance Profile with switch account access. Create role with enough permission to deploy your services
+
 ```
 https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-iam-instance-profile.html
 ```
+
 3. Install AWS CLI on EC2 and configure profile to deploy on multi account
+
 ```
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html
 ```
