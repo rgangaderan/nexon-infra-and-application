@@ -45,7 +45,8 @@ https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-mult
 
 1. Create an EC2 Instance on your AWS Account and configure GitHub Access Self Hosted Runner
 
- <img width="291" alt="image" src="https://user-images.githubusercontent.com/36160986/188068773-62e7145d-22b3-480f-9558-9d5cf295b897.png">
+<img width="785" alt="image" src="https://user-images.githubusercontent.com/41107404/189355806-cf853e48-dde6-4a6d-bc16-c225865f6ff3.png">
+
 
 
 2. IAM Role for Instance Profile with switch account access. Create role with enough permission to deploy your services
@@ -61,14 +62,13 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.ht
 ```
 
 # Deployment Process
+
 1. We have GitHub Workflow files located in “.github/workflow” directory
 2. Create a feature branch and commit your changes, once merge with Dev it will automatically trigger the pipeline and deploy the dev environment.
 3. Once dev branch merged with main branch you can manually trigger the production pipeline deployment will need a review and approve from your reviewer which already added in GHA Environment.
 
-<img width="785" alt="image" src="https://user-images.githubusercontent.com/41107404/189355683-d4eba377-162c-4080-a629-31dc167e78a6.png">
-
-<img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068843-26346343-d60a-4bcf-b92c-54ef7b67b3fd.png">
-
-<img width="452" alt="image" src="https://user-images.githubusercontent.com/36160986/188068881-3fe2f6df-b229-4805-a388-88c26070b265.png">
-
-
+- <img width="1283" alt="image" src="https://user-images.githubusercontent.com/41107404/189356049-29f14b16-e07f-4592-ae8c-246e1c234649.png">
+- <img width="1292" alt="image" src="https://user-images.githubusercontent.com/41107404/189356179-3b40c35f-a824-4d36-af31-07310818f8ea.png">
+- <img width="1712" alt="image" src="https://user-images.githubusercontent.com/41107404/189356379-aba0d849-49e4-48ab-b0a4-2d43b542f706.png">
+- <img width="1712" alt="image" src="https://user-images.githubusercontent.com/41107404/189356461-8e807cf6-5280-4179-b78c-c3c8a02432ac.png">
+- <img width="1703" alt="image" src="https://user-images.githubusercontent.com/41107404/189356576-bb2435c3-6ea2-4ec5-a7a8-0a6ea885f5d1.png">
