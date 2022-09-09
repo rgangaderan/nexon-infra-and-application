@@ -63,9 +63,10 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.ht
 ### This repository contained 4 different components 
 1. VPC
 2. WebApp Static with Classic Load Balancer
-- ![EC2-ALB (4)](https://user-images.githubusercontent.com/36160986/189387361-47cf8271-4d5b-4655-ad8a-f83c4c55355e.jpg)
 
-3. WebApp Static with Application Load Balancer 
+3. WebApp Static with Application Load Balancer
+ 
+- ![EC2-ALB (4)](https://user-images.githubusercontent.com/36160986/189387361-47cf8271-4d5b-4655-ad8a-f83c4c55355e.jpg)
 4. WebApp with ECS and Application Load Balancer with RDS Instance Backend 
 # Deployment Process
 
