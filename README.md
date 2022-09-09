@@ -67,7 +67,9 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.ht
 3. WebApp Static with Application Load Balancer
  
 - ![EC2-ALB (4)](https://user-images.githubusercontent.com/36160986/189387361-47cf8271-4d5b-4655-ad8a-f83c4c55355e.jpg)
-4. WebApp with ECS and Application Load Balancer with RDS Instance Backend 
+4. WebApp with ECS and Application Load Balancer with RDS Instance Backend
+- ![image](https://user-images.githubusercontent.com/36160986/189396700-7abc2545-33e9-4910-b5b7-02c076ed1398.png)
+ 
 # Deployment Process
 
 1. We have GitHub Workflow files located in “.github/workflow” directory
