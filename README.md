@@ -35,15 +35,12 @@ EOF
 }
 ```
 
-- In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory.
-
-such as development/network/ terragrun.hcl it will take the path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-").
-
-So, the workspace name could looks like "nexon-development-network". this same approach will use for all the backend.
+- In the above example you can see workspaces name in line number 27 has "name" attribute will get the values from local.env which is defined in line number 11, so, when ever you run Terragrunt in specific directory. such as development/network/ terragrun.hcl it will take the path name = "development/network/" and replace "/" with "-" then join with "nexon" (Since Terraform Cloud does not allow "/" as workspace name we need to replace that with something else, so I used "-"). So, the workspace name could looks like "nexon-development-network". this same approach will use for all the backend.
 
 For more details you can find in Terragrun Docs.
+```
 https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-multiple-modules-at-once/
-
+```
 ## Prerequisites / Setup Required
 
 1. Create an EC2 Instance on your AWS Account and configure GitHub Access Self Hosted Runner
