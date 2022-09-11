@@ -44,8 +44,8 @@ https://terragrunt.gruntwork.io/docs/features/execute-terraform-commands-on-mult
 ## Prerequisites / Setup Required
 
 1. Create an EC2 Instance on your AWS Account and configure GitHub Access Self Hosted Runner
+<img width="1106" alt="image" src="https://user-images.githubusercontent.com/36160986/189518510-87ef78a9-9d52-4028-acd7-3449a5a67035.png">
 
-![Uploading image.png…]()
 
 2. IAM Role for Instance Profile with switch account access. Create role with enough permission to deploy your services
 
