@@ -3,7 +3,7 @@ locals {
     terraform_token = get_env("TERRAFORM_TOKEN") # Terraform cloud token placed in GitHub Secret, 
                                                  # it will fetch when terragrunt init executes from self-hosted GHA Runers.
  }
-# In order to create unique workspace in toerrafrom cloud I have used local.env for workspace name #
+# In order to create unique workspace in terraform cloud I have used local.env for workspace name #
 generate "backend" {
   path      = "backend.tf"
   if_exists = "overwrite_terragrunt"

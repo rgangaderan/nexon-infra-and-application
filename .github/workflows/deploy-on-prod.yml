@@ -77,45 +77,45 @@ jobs:
 #Deploy Static-WebApp with Application Load Balancer and Autoscalling groups
 ############################################################################
 
-  # deploy-webapp-alb: 
-  #   defaults: 
-  #     run: 
-  #       shell: bash
-  #   name: Deploy-PROD-WebApp-ALB
-  #   environment:
-  #     name: Prod
-  #   runs-on: self-hosted
-  #   steps: 
-  #     - 
-  #       name: Checkout
-  #       uses: actions/checkout@v2
-  #     - 
-  #       name: Terragrunt Apply WebApp-alb
-  #       run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
-  #       env:
-  #         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-  #   needs: [deploy-vpc]
+  deploy-webapp-alb: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-PROD-WebApp-ALB
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp-alb
+        run: terragrunt init --terragrunt-working-dir ./production/static-web-app-alb && terragrunt apply -auto-approve --terragrunt-working-dir ./production/static-web-app-alb
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
 
 #######################################################################
 #Deploy Static-WebApp with , ECS Fargate with Application Load Balancer
 #######################################################################
 
-  # deploy-nexon-marketing: 
-  #   defaults: 
-  #     run: 
-  #       shell: bash
-  #   name: Deploy-PROD-Nexon-Marketing
-  #   environment:
-  #     name: Prod
-  #   runs-on: self-hosted
-  #   steps: 
-  #     - 
-  #       name: Checkout
-  #       uses: actions/checkout@v2
-  #     - 
-  #       name: Terragrunt Apply WebApp-alb
+  deploy-nexon-marketing: 
+    defaults: 
+      run: 
+        shell: bash
+    name: Deploy-PROD-Nexon-Marketing
+    environment:
+      name: Prod
+    runs-on: self-hosted
+    steps: 
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Terragrunt Apply WebApp-alb
 
-  #       run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
-  #       env:
-  #         TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
-  #   needs: [deploy-vpc]
+        run: terragrunt init --terragrunt-working-dir ./production/nexon-marketing-app && terragrunt apply -auto-approve --terragrunt-working-dir ./production/nexon-marketing-app
+        env:
+          TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
+    needs: [deploy-vpc]
